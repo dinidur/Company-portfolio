@@ -1,0 +1,30 @@
+# backend
+fastapi>=0.115
+uvicorn[standard]>=0.30
+httpx>=0.27
+pydantic>=2.7
+python-dotenv>=1.0
+pyyaml>=6.0
+pyjwt>=2.8
+
+# agents / llm
+langgraph>=1.0
+langchain-core>=1.0
+langchain-google-genai>=4.0
+langchain-ollama>=1.0
+langchain-text-splitters>=1.0
+langsmith>=0.4
+
+# retrieval
+pinecone>=7.0
+fastembed>=0.7
+numpy>=1.26
+
+# mcp (v1 API - FastMCP)
+mcp>=1.10,<2
+
+# ui
+streamlit>=1.40
+
+# tests
+pytest>=8.0

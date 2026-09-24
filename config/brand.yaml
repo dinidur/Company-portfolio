@@ -1,0 +1,15 @@
+# The bot's own company. Assignment says "you can use commercial bank as the bot own company".
+# I used a fictional bank name so the demo does not impersonate a real brand. Change here only.
+bank_name: Nova Commercial Bank
+assistant_name: Nila
+tagline: Banking you can trust
+# phrases the assistant must never say (brand + regulatory risk)
+banned_phrases:
+  - guaranteed return
+  - risk free investment
+  - i promise
+  - our bank is the worst
+  - the bank is incompetent
+competitors:
+  - Apex Bank
+  - Coral Savings Bank

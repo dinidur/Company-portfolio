@@ -1,0 +1,36 @@
+[project]
+name = "enterprise-ai-assistant"
+version = "1.0.0"
+description = "Nila - enterprise knowledge assistant (LangGraph multi-agent, hybrid RAG on Pinecone, RLM, MCP, RBAC)"
+authors = [{ name = "Dinidu Rukshan", email = "dev.rukshan@gmail.com" }]
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "httpx>=0.27",
+    "pydantic>=2.7",
+    "python-dotenv>=1.0",
+    "pyyaml>=6.0",
+    "pyjwt>=2.8",
+    "langgraph>=1.0",
+    "langchain-core>=1.0",
+    "langchain-google-genai>=4.0",
+    "langchain-ollama>=1.0",
+    "langchain-text-splitters>=1.0",
+    "langsmith>=0.4",
+    "pinecone>=7.0",
+    "fastembed>=0.7",
+    "numpy>=1.26",
+    "mcp>=1.10,<2",
+    "streamlit>=1.40",
+]
+
+[dependency-groups]
+dev = ["pytest>=8.0"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.ruff]
+line-length = 120

@@ -1,0 +1,23 @@
+# Agent roles in the LangGraph. Read by src/agents/orchestrator.py for the UI + docs.
+agents:
+  input_guard:
+    description: Validates the request, checks prompt injection, applies rate limit decision
+  supervisor:
+    description: Intent understanding, task decomposition, agent routing
+    routes: [retrieval, research, tools, direct]
+  retrieval:
+    description: Hybrid RAG (dense + BM25 on Pinecone), metadata filters by role, rerank
+    tools: [knowledge_search]
+  research:
+    description: Recursive Language Model (RLM) - explores the collection with a python search plan, batches, recursive sub-agents, aggregates
+  tools:
+    description: Calls MCP tools (employee directory, service catalog, incidents) and python analysis
+    tools: [employee_directory, service_catalog, incident_records, python_analysis, reindex_knowledge_base, view_audit_log]
+  human_approval:
+    description: Human-in-the-loop - pauses the graph for sensitive tools
+  response:
+    description: Writes the final answer with citations in bank brand voice
+  validator:
+    description: Checks citations, leakage, brand rules. One retry, then safe fallback
+  memory:
+    description: Saves the turn to short-term (checkpointer) and long-term (sqlite) memory

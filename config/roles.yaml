@@ -1,0 +1,43 @@
+# Option A from the assignment: hardcoded users and roles.
+# Passwords are PBKDF2 hashed (demo passwords are in README).
+# To move to Keycloak later, only src/security/auth.py needs to change.
+
+users:
+  alice:
+    full_name: Alice Perera
+    role: viewer
+    department: customer_service
+    password_hash: "pbkdf2$11da999c9975aa72$4b468455b5af42e935efdb125f3bac04454ee159fdd60d597aa8af3314b9afe7"
+  bob:
+    full_name: Bob Fernando
+    role: analyst
+    department: payments
+    password_hash: "pbkdf2$1a918a27ec1a0011$95679b495ab344a91594070b4cf19445332842550fd70a565729fc6448c5376e"
+  carol:
+    full_name: Carol Silva
+    role: admin
+    department: platform
+    password_hash: "pbkdf2$4f05660a16797529$575fdc32da368f381bd95727f759e6ddd569b6bb33f3b2dc335b57ed650500ef"
+
+roles:
+  viewer:
+    # chat + search only
+    tools: [knowledge_search]
+    access_levels: [public, internal]
+    can_research: true
+    rate_limit: { capacity: 8, refill_per_sec: 0.1 }
+  analyst:
+    tools: [knowledge_search, python_analysis, employee_directory, service_catalog, incident_records]
+    access_levels: [public, internal, confidential]
+    can_research: true
+    rate_limit: { capacity: 15, refill_per_sec: 0.25 }
+  admin:
+    tools: ["*"]   # all tools, including admin tools
+    access_levels: [public, internal, confidential, restricted]
+    can_research: true
+    rate_limit: { capacity: 30, refill_per_sec: 0.5 }
+
+# tools that need a human "yes" before they run (HITL node)
+approval_required_tools: [reindex_knowledge_base]
+# tools only admin can use (even if someone edits the list above by mistake)
+admin_only_tools: [reindex_knowledge_base, view_audit_log]
