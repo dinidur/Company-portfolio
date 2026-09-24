@@ -1,0 +1,34 @@
+{
+  "employees": [
+    {"id": "E001", "name": "Bob Fernando", "title": "Senior Payments Engineer", "department": "payments", "email": "bob.fernando@novabank.example", "phone": "+94 11 555 0101", "manager": "E004", "on_call": true},
+    {"id": "E002", "name": "Alice Perera", "title": "Customer Service Lead", "department": "customer_service", "email": "alice.perera@novabank.example", "phone": "+94 11 555 0102", "manager": "E006", "on_call": false},
+    {"id": "E003", "name": "Carol Silva", "title": "Platform Engineering Manager", "department": "platform", "email": "carol.silva@novabank.example", "phone": "+94 11 555 0103", "manager": "E007", "on_call": false},
+    {"id": "E004", "name": "Nimal Jayasinghe", "title": "Payments Platform Lead", "department": "payments", "email": "nimal.j@novabank.example", "phone": "+94 11 555 0104", "manager": "E007", "on_call": false},
+    {"id": "E005", "name": "Shalini Rajapaksha", "title": "Security Operations Analyst", "department": "security", "email": "shalini.r@novabank.example", "phone": "+94 11 555 0105", "manager": "E008", "on_call": true},
+    {"id": "E006", "name": "Kasun Wickramasinghe", "title": "Head of Customer Experience", "department": "customer_service", "email": "kasun.w@novabank.example", "phone": "+94 11 555 0106", "manager": "E007", "on_call": false},
+    {"id": "E007", "name": "Dilini Gunawardena", "title": "Head of Technology", "department": "platform", "email": "dilini.g@novabank.example", "phone": "+94 11 555 0107", "manager": null, "on_call": false},
+    {"id": "E008", "name": "Ruwan Perera", "title": "CISO", "department": "security", "email": "ruwan.p@novabank.example", "phone": "+94 11 555 0108", "manager": "E007", "on_call": false},
+    {"id": "E009", "name": "Tharindu Senanayake", "title": "SRE", "department": "platform", "email": "tharindu.s@novabank.example", "phone": "+94 11 555 0109", "manager": "E003", "on_call": true}
+  ],
+  "services": [
+    {"id": "SVC-001", "name": "card-payment-gateway", "owner_team": "Payments Platform", "owner": "E004", "tier": 1, "slo_availability": "99.95%", "status": "degraded", "depends_on": ["payments-db", "fraud-check-service", "core-banking-esb"]},
+    {"id": "SVC-002", "name": "fraud-check-service", "owner_team": "Payments Platform", "owner": "E001", "tier": 1, "slo_availability": "99.9%", "status": "operational", "depends_on": ["payments-db"]},
+    {"id": "SVC-003", "name": "interbank-transfer", "owner_team": "Payments Platform", "owner": "E004", "tier": 1, "slo_availability": "99.9%", "status": "operational", "depends_on": ["islandpay-switch"]},
+    {"id": "SVC-004", "name": "mobile-wallet", "owner_team": "Digital Channels", "owner": "E006", "tier": 1, "slo_availability": "99.9%", "status": "operational", "depends_on": ["core-banking-esb"]},
+    {"id": "SVC-005", "name": "hr-portal", "owner_team": "Platform", "owner": "E003", "tier": 3, "slo_availability": "99%", "status": "operational", "depends_on": []},
+    {"id": "SVC-006", "name": "payments-api", "owner_team": "Payments Platform", "owner": "E001", "tier": 2, "slo_availability": "99.9%", "status": "operational", "depends_on": ["card-payment-gateway"]},
+    {"id": "SVC-007", "name": "islandpay-switch", "owner_team": "External - IslandPay", "owner": null, "tier": 1, "slo_availability": "99.5%", "status": "operational", "depends_on": [], "noc_phone": "+94 11 777 9000"},
+    {"id": "SVC-008", "name": "legacy-core-reports", "owner_team": "Platform", "owner": "E003", "tier": 3, "slo_availability": "95%", "status": "slow", "depends_on": []}
+  ],
+  "incidents": [
+    {"id": "INC-2025-1011", "service": "card-payment-gateway", "severity": "SEV1", "date": "2025-10-11", "duration_min": 85, "root_cause_category": "database connection pool exhaustion", "status": "closed", "failed_txn": 41000},
+    {"id": "INC-2025-1107", "service": "interbank-transfer", "severity": "SEV2", "date": "2025-11-07", "duration_min": 55, "root_cause_category": "third-party switch timeout", "status": "closed", "failed_txn": 9200},
+    {"id": "INC-2025-1220", "service": "card-acquiring", "severity": "SEV1", "date": "2025-12-20", "duration_min": 130, "root_cause_category": "certificate expiry", "status": "closed", "failed_txn": 23000},
+    {"id": "INC-2026-0114", "service": "card-payment-gateway", "severity": "SEV1", "date": "2026-01-14", "duration_min": 50, "root_cause_category": "database connection pool exhaustion", "status": "closed", "failed_txn": 27000},
+    {"id": "INC-2026-0303", "service": "mobile-wallet", "severity": "SEV1", "date": "2026-03-03", "duration_min": 180, "root_cause_category": "missing idempotency on retries", "status": "closed", "failed_txn": 1340},
+    {"id": "INC-2026-0419", "service": "interbank-transfer", "severity": "SEV2", "date": "2026-04-19", "duration_min": 65, "root_cause_category": "third-party switch timeout", "status": "closed", "failed_txn": 15000},
+    {"id": "INC-2026-0602", "service": "card-payment-gateway", "severity": "SEV2", "date": "2026-06-02", "duration_min": 35, "root_cause_category": "configuration drift", "status": "closed", "failed_txn": 6100},
+    {"id": "INC-2026-0715", "service": "payments-api", "severity": "SEV2", "date": "2026-07-15", "duration_min": 45, "root_cause_category": "certificate expiry", "status": "closed", "failed_txn": 2200},
+    {"id": "INC-2026-0828", "service": "card-payment-gateway", "severity": "SEV2", "date": "2026-08-28", "duration_min": 25, "root_cause_category": "database connection pool exhaustion", "status": "monitoring", "failed_txn": 3900}
+  ]
+}
