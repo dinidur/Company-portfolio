@@ -106,7 +106,17 @@ class PineconeStore:
         if not settings.PINECONE_API_KEY:
             raise VectorStoreError("PINECONE_API_KEY is not set")
         self.pc = Pinecone(api_key=settings.PINECONE_API_KEY)
-        self.index = self.pc.Index(settings.PINECONE_INDEX)
+        self._index = None  # resolved lazily - the index may not exist yet (first ingest creates it)
+
+    @property
+    def index(self):
+        if self._index is None:
+            try:
+                self._index = self.pc.Index(settings.PINECONE_INDEX)
+            except Exception as e:
+                raise VectorStoreError(f"pinecone index '{settings.PINECONE_INDEX}' not available: {e}. "
+                                       "Run: python scripts/ingest_documents.py") from e
+        return self._index
 
     @staticmethod
     def _scale(dense: list[float], sparse: dict, alpha: float):
@@ -150,7 +160,7 @@ class PineconeStore:
             log.info("creating pinecone index", extra={"index": settings.PINECONE_INDEX})
             self.pc.create_index(name=settings.PINECONE_INDEX, dimension=settings.DENSE_DIM, metric="dotproduct",
                                  spec=ServerlessSpec(cloud=settings.PINECONE_CLOUD, region=settings.PINECONE_REGION))
-        self.index = self.pc.Index(settings.PINECONE_INDEX)
+        self._index = self.pc.Index(settings.PINECONE_INDEX)
 
     def upsert_chunks(self, chunks: list[dict]):
         texts = [c["text"] for c in chunks]
